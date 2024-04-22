@@ -10,8 +10,18 @@ task("show-balance", async () => {
   return showBalance();
 });
 
-task("deploy-contract", async () => {
-  const deployContract = require("./scripts/deployContract");
+task("deploy-manage", async () => {
+  const deployContract = require("./scripts/deployManage");
+  return deployContract();
+});
+
+task("deploy-sbt", async () => {
+  const deployContract = require("./scripts/deploySBT");
+  return deployContract();
+});
+
+task("deploy-secondSBT", async () => {
+  const deployContract = require("./scripts/deploySecondSBT");
   return deployContract();
 });
 
@@ -31,7 +41,7 @@ module.exports = {
     timeout: 3600000,
   },
   solidity: {
-    version: "0.8.9",
+    version: "0.8.20",
     settings: {
       optimizer: {
         enabled: true,
@@ -40,7 +50,7 @@ module.exports = {
     },
   },
   // This specifies network configurations used when running Hardhat tasks
-  defaultNetwork: "local",
+  defaultNetwork: "testnet",
   networks: {
     local: {
       // Your Hedera Local Node address pulled from the .env file
