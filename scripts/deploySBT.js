@@ -31,8 +31,8 @@ module.exports = async () => {
   //Accepts constructor parameters from our contract
   const soulBoundToken = await SoulBoundToken.deploy(
     deployArgs.manager,
-    "EarlyAdopterSBT",
-    "EAS"
+    "Blast Maxi",
+    ""
   );
   //We use wait to receive the transaction (deployment) receipt, which contains contractAddress
   const contractAddress = (await soulBoundToken.deployTransaction.wait())

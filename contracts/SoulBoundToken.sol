@@ -1,38 +1,50 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.4;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract SoulBoundToken is ERC721 {
-    address public owner;
+contract SoulBoundToken is ERC721, Ownable {
     address public manager;
+    string public tokenImage;
 
     uint private _totalSupply;
 
     event SafeMint(address indexed to);
 
-    constructor(address _manager, string memory _name, string memory _symbol) ERC721(_name, _symbol) {
-        owner = msg.sender;
+    constructor(
+        address _manager,
+        string memory _name,
+        string memory _tokenImage
+    ) ERC721(_name, "SBT") Ownable(msg.sender) {
         manager = _manager;
+        tokenImage = _tokenImage;
     }
 
     modifier onlyManager() {
-        require(msg.sender == manager, "Only the manager can call this function");
+        require(
+            msg.sender == manager,
+            "Only the manager can call this function"
+        );
         _;
     }
 
+    function setTokenImage(string memory _tokenImage) public onlyOwner {
+        tokenImage = _tokenImage;
+    }
+
     // Overriden function, Not used directly
-    function _update(address to, uint tokenId, address auth) internal override(ERC721) returns (address) {
+    function _update(
+        address to,
+        uint tokenId,
+        address auth
+    ) internal override(ERC721) returns (address) {
         address from = _ownerOf(tokenId);
         if (from != address(0) && to != address(0)) {
             revert("Soulbound: Transfer failed");
         }
 
         return super._update(to, tokenId, auth);
-    }
-
-    function one() public view returns (address) {
-        return owner;
     }
 
     // Called from Manage Contract, not used directly

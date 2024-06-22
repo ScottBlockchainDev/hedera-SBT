@@ -5,10 +5,6 @@ require("@nomiclabs/hardhat-ethers");
 require("dotenv").config();
 
 // Define Hardhat tasks here, which can be accessed in our test file (test/rpc.js) by using hre.run('taskName')
-task("show-balance", async () => {
-  const showBalance = require("./scripts/showBalance");
-  return showBalance();
-});
 
 task("deploy-manage", async () => {
   const deployContract = require("./scripts/deployManage");
@@ -20,18 +16,8 @@ task("deploy-sbt", async () => {
   return deployContract();
 });
 
-task("deploy-secondSBT", async () => {
-  const deployContract = require("./scripts/deploySecondSBT");
-  return deployContract();
-});
-
-task("contract-view-call", async (taskArgs) => {
-  const contractViewCall = require("./scripts/contractViewCall");
-  return contractViewCall(taskArgs.contractAddress);
-});
-
-task("contract-call", async (taskArgs) => {
-  const contractCall = require("./scripts/contractCall");
+task("register-sbt", async (taskArgs) => {
+  const contractCall = require("./scripts/registerSBT");
   return contractCall(taskArgs.contractAddress, taskArgs.msg);
 });
 
