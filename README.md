@@ -1,1 +1,1 @@
-# Hedera Sould Bound Token
+# Hedera Soul Bound Token
